@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs"; // Nueva importación
 
-const SOCKET_URL = "http://localhost:8080/ws";
+const SOCKET_URL = "http://localhost:8081/ws";
 
 export default function ChatPage() {
     const [actualUser, setActualUser] = useState();
