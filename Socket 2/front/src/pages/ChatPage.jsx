@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import stompService from "../utils/StompService";
 
 export default function ChatPage () {
+    const user = localStorage.getItem('user');
     const [ messages, setMessages] = useState([]);
-    const [ actualUser, setActualUser] = useState("Kelocoes");
+    // eslint-disable-next-line
+    const [ actualUser, setActualUser] = useState(user?.toLowerCase());
     const [ message, setMessage] = useState("");
     const [ to, setTo] = useState("");
 
@@ -18,6 +20,9 @@ export default function ChatPage () {
     };
 
     useEffect(() => {
+        if (!actualUser) {
+            return;
+        }
         const connectAndSubscribe = async () => {
             await stompService.connect();
 
@@ -34,8 +39,17 @@ export default function ChatPage () {
         // eslint-disable-next-line
     }, []);
 
+    if (!actualUser) {
+        return (
+            <div>
+                <h1>Chat</h1>
+                <p>Por favor, ingrese un nombre de usuario</p>
+            </div>
+        );
+    }
+
     return (
-        <div style={{ width: '80%' }}>
+        <div style={{ width: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection:'column' }}>
             <h1>Chat</h1>
             <div id="chat">
                 <input type="text" placeholder="To" onChange={(e) => setTo(e.target.value)} />
