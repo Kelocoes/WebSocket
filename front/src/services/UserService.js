@@ -4,11 +4,11 @@ import axios from "axios";
 export function getUserById (id) {
     return axiosInstance.get(`/api/user/${id}`)
         .then(response => {
-            console.log(response.data);
-            console.log(response.status);
-            console.log(response.statusText);
-            console.log(response.headers);
-            console.log(response.config);
+            console.log(response.data); // {id: 1, name: 'test', email: ''}
+            console.log(response.status); // 200
+            console.log(response.statusText); // OK
+            console.log(response.headers); // {content-type: 'application/json'}
+            console.log(response.config); // {url: '/api/user/1', method: 'get', ...}
             console.log(response)
             return response.data
         })

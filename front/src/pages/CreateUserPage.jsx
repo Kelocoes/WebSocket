@@ -1,30 +1,36 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserById } from "../services/UserService";
+import { useDispatch } from "react-redux";
+import { setUser } from "../reducers/UserReducer/UserReducer";
 
 export default function CreateUserPage() {
     const { userId } = useParams();
-    const id = userId ?? 1;
 
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
 
+    const dispatch = useDispatch();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log({ name, username, email });
         localStorage.setItem('user', username);
+        dispatch(setUser({ name, username, email }));
     };
 
     useEffect(() => {
-        getUserById(id)
+        if (userId) {
+            getUserById(userId)
+        }
         // eslint-disable-next-line
     }, [])
 
     return (
         <div>
             <h1>Crear usuario</h1>
-            <p>Esta es la página para crear un usuario con id {id}</p>
+            {userId && <p>Esta es la página para crear un usuario con id {userId}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="name">Nombre:</label>
